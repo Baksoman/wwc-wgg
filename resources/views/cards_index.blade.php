@@ -98,13 +98,15 @@
             animation: glowing 4s ease-in-out infinite;
         }
 
-        .card-view{
-            transition: .5s ease;
+        .card-view {
+            transition: .5s ease !important;
         }
 
-        .card-view:hover{
-            transition: .5s ease;
-            cursor: pointer;
+        .card-view:hover {
+            transition: .5s ease !important;
+            cursor: pointer !important;
+            transform: scale(1.05) !important;
+            animation: none !important;
         }
     </style>
 @endsection
@@ -115,8 +117,8 @@
         <div class="relative w-screen h-screen">
 
             <p class="absolute glowing w-screen antiqua text-5xl lg:text-7xl text-center font-bold mt-4 text-[#8B48CC] drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
-                              animate-fade-in tracking-wide" 
-                              data-aos="fade-down" data-aos-duration="500" data-aos-easing="ease-in-out">
+                                  animate-fade-in tracking-wide" data-aos="fade-down" data-aos-duration="500"
+                data-aos-easing="ease-in-out">
                 Beyond The Inspiration
             </p>
 
@@ -134,7 +136,7 @@
                                 <label for="titleInput" class="form-label text-white">Title</label>
                                 <input type="text" name="title" id="titleInput"
                                     class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                                   backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                                                       backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
                                     placeholder="Enter title..." value="{{ old('title') }}" required>
                             </div>
 
@@ -142,7 +144,7 @@
                                 <label for="exampleInputEmail1" class="form-label">Description</label>
                                 <textarea type="text" name="description" id="descInput"
                                     class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                                   backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"" placeholder="Enter description..." required>{{ old('description') }}</textarea>
+                                                       backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"" placeholder="Enter description..." required>{{ old('description') }}</textarea>
                             </div>
 
                             <div class="mb-3">
@@ -150,8 +152,8 @@
                                     png) max 2MB</label>
                                 <input type="file" name="picture" id="imageInput"
                                     class="form-control max-w-[15rem] bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                                   backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50""
-                                            accept=" image/*">
+                                                       backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50""
+                                                accept=" image/*">
                             </div>
 
                             <div class="flex gap-[4vw]">
@@ -183,7 +185,7 @@
                             <div class="mt-4">
                                 <button type="submit"
                                     class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#402C79] to-[#5A3E9D] text-white font-medium shadow-md 
-                                    hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
+                                        hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
                                     Card</button>
                             </div>
                         </form>
@@ -271,9 +273,9 @@
                             <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500"
                                 data-id="{{ $data->id }}">
                                 <!-- Card -->
-                                <div
-                                    class="card-view hover:scale-105 max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6"
-                                    data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-anchor-placement="top-bottom">
+                                <div class="card-view max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6"
+                                    data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out"
+                                    data-aos-anchor-placement="top-bottom">
                                     @php
                                         $dummyImages = File::files(public_path('dummy_pict'));
                                         $randomDummyImage = count($dummyImages) > 0 ? asset('dummy_pict/' . $dummyImages[array_rand($dummyImages)]->getFilename()) : asset('images/enchanted_forest.jpg');
@@ -379,7 +381,7 @@
                 });
             @endif
 
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
         // Handle Edit Title
         document.querySelectorAll(".edit-title").forEach(button => {
