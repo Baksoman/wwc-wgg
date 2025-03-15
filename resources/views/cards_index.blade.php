@@ -11,14 +11,10 @@
             background-image: linear-gradient(180deg,
                     hsl(256deg 47% 32%) 0%,
                     hsl(258deg 52% 35%) 13%,
-                    hsl(259deg 53% 36%) 22%,
-                    hsl(259deg 54% 36%) 36%,
-                    hsl(260deg 55% 37%) 63%,
-                    hsl(261deg 57% 37%) 85%,
-                    hsl(261deg 58% 38%) 94%,
-                    hsl(262deg 59% 38%) 98%,
-                    hsl(263deg 61% 39%) 100%,
-                    hsl(264deg 62% 39%) 100%);
+                    hsl(258deg 52% 40%) 30%,
+                    hsl(259deg 53% 50%) 50%,
+                    hsl(261deg 58% 60%) 100%
+                );
         }
 
         .form-label {
@@ -29,12 +25,10 @@
         @keyframes purple-glow {
             0% {
                 box-shadow: 0 0 20px 5px rgba(60, 20, 120, 0.6);
-                /* Darker deep purple */
             }
 
             50% {
                 box-shadow: 0 0 40px 15px rgba(98, 24, 180, 0.9);
-                /* Rich, intense dark violet */
             }
 
             100% {
@@ -45,12 +39,10 @@
         @keyframes orange-glow {
             0% {
                 filter: drop-shadow(0 0 5px rgba(218, 112, 32, 0.6));
-                /* Dark burnt orange */
             }
 
             50% {
                 filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.9));
-                /* Rich glowing orange */
             }
 
             100% {
@@ -108,6 +100,11 @@
             transform: scale(1.05) !important;
             animation: none !important;
         }
+
+        .bg-div-2 {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 @endsection
 
@@ -115,15 +112,19 @@
     <main class="w-full h-full overflow-hidden">
 
         <div class="relative w-screen h-screen">
-
-            <p class="absolute glowing w-screen antiqua text-5xl lg:text-7xl text-center font-bold mt-4 text-[#8B48CC] drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
-                                  animate-fade-in tracking-wide" data-aos="fade-down" data-aos-duration="500"
+            <p class="absolute glowing w-screen h-screen flex items-center justify-center antiqua text-7xl lg:text-8xl text-center font-bold text-[#8B48CC] drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
+                animate-fade-in tracking-wide" data-aos="fade" data-aos-duration="500"
                 data-aos-easing="ease-in-out">
                 Beyond The Inspiration
             </p>
+            <img src="{{ asset('images/enchantedForest_bg_flip.jpg') }}" alt="bg"
+                class="w-screen h-screen object-cover absolute z-[-10]">
+        </div>
+
+        <div class="relative w-screen h-screen">
 
             <img src="{{ asset('images/enchantedForest_bg.jpg') }}" alt="bg"
-                class="w-screen h-screen object-cover absolute z-[-10] overflow-x-hidden">
+                class="bg-div-2 w-screen h-screen object-cover absolute z-[-10] overflow-x-hidden">
 
             <div class="h-screen flex flex-wrap justify-center items-center gap-[4vw]">
                 <div
@@ -136,15 +137,14 @@
                                 <label for="titleInput" class="form-label text-white">Title</label>
                                 <input type="text" name="title" id="titleInput"
                                     class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                                       backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                                    backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
                                     placeholder="Enter title..." value="{{ old('title') }}" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Description</label>
                                 <textarea type="text" name="description" id="descInput"
-                                    class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                                       backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"" placeholder="Enter description..." required>{{ old('description') }}</textarea>
+                                    class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"" placeholder="Enter description..." required>{{ old('description') }}</textarea>
                             </div>
 
                             <div class="mb-3">
@@ -152,8 +152,8 @@
                                     png) max 2MB</label>
                                 <input type="file" name="picture" id="imageInput"
                                     class="form-control max-w-[15rem] bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                                       backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50""
-                                                accept=" image/*">
+                                    backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50""
+                                    accept=" image/*">
                             </div>
 
                             <div class="flex gap-[4vw]">
@@ -185,7 +185,7 @@
                             <div class="mt-4">
                                 <button type="submit"
                                     class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#402C79] to-[#5A3E9D] text-white font-medium shadow-md 
-                                        hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
+                                                    hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
                                     Card</button>
                             </div>
                         </form>
@@ -197,7 +197,7 @@
                     <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500">
                         <!-- Card -->
                         <div id="cardPreview"
-                            class="max-w-sm rounded-2xl overflow-hidden w-[20vw] h-[60vh] shadow-lg p-3 space-y-4 mt-4 border border-white/18">
+                            class="max-w-sm rounded-2xl bg-white/15 overflow-hidden w-[20vw] h-[60vh] shadow-lg p-3 space-y-4 mt-4 border border-white/18">
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
                                 src="https://via.placeholder.com/300" alt="Input your Image`" />
 
@@ -257,7 +257,7 @@
                         </div>
                         <input type="text" name="search" value="{{ request('search') }}"
                             class="h-14 w-full pl-10 pr-20 rounded-lg z-0 focus:shadow focus:outline-none"
-                            placeholder="Search Title..." />
+                            placeholder="Search Title, Description..." />
                         <div class="absolute top-2 right-2">
                             <button type="submit" class="h-10 w-20 text-white rounded-lg bg-[#402C79]">
                                 Search
@@ -291,7 +291,7 @@
                                     <!-- Title Section -->
                                     <div class="relative">
                                         <h2 id="title-{{ $data->id }}"
-                                            class="text-xl poppins font-bold text-[{{ $data->colorTitle }}]-800">
+                                            class="text-xl poppins font-bold text-[{{ $data->colorTitle }}]">
                                             {{$data->title}}
                                         </h2>
                                         <button
@@ -304,7 +304,7 @@
                                     <!-- Description Section -->
                                     <div class="relative">
                                         <p id="desc-{{ $data->id }}"
-                                            class="text-[{{ $data->colorDesc }}]-600 text-md poppins text-justify">
+                                            class="text-[{{ $data->colorDesc }}] text-md poppins text-justify">
                                             {{$data->description}}
                                         </p>
                                         <button
@@ -381,7 +381,7 @@
                 });
             @endif
 
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
         // Handle Edit Title
         document.querySelectorAll(".edit-title").forEach(button => {
