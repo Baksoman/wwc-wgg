@@ -41,7 +41,7 @@ class CardController extends Controller
             $request->file('picture')->move(public_path('card_pictures'), $imageName);
             $card->picture = $imageName;
         }
-
+        
         $card->colorTitle = $request->input('colorTitle');
         $card->colorDesc = $request->input('colorDesc');
         $card->colorBg = $request->input('colorBg');

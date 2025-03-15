@@ -70,11 +70,15 @@
             font-family: 'Poppins', Arial, Helvetica, sans-serif;
         }
 
-        @media (max-width: 700px) {
-        .card-preview {
-            display: none;
+        .antiqua {
+            font-family: 'Uncial Antiqua', Arial, Helvetica, sans-serif;
         }
-    }
+
+        @media (max-width: 700px) {
+            .card-preview {
+                display: none;
+            }
+        }
     </style>
 @endsection
 
@@ -83,52 +87,65 @@
 
         <div class="relative w-screen h-screen">
 
+            <p class="absolute w-screen antiqua text-5xl lg:text-7xl text-center font-bold mt-4 text-purple-300 drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
+                      animate-fade-in tracking-wide">
+                Beyond The Inspiration
+            </p>
+
             <img src="{{ asset('images/enchantedForest_bg.jpg') }}" alt="bg"
                 class="w-screen h-screen object-cover absolute z-[-10] overflow-x-hidden">
 
             <div class="h-screen flex flex-wrap justify-center items-center gap-[4vw]">
                 <div
-                    class="card min-w-[20rem] w-[50vw] h-auto bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18">
+                    class="card mt-10 min-w-[20rem] w-[50vw] h-auto bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18">
                     <div class="card-body">
 
                         <form action="/insertData" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Title</label>
-                                <input type="text" name="title" id="titleInput" class="form-control"
+                                <label for="titleInput" class="form-label text-white">Title</label>
+                                <input type="text" name="title" id="titleInput"
+                                    class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
+                                           backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                                    placeholder="Enter title..."
                                     value="{{ old('title') }}" required>
-                            </div>
+                            </div>                            
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Description</label>
-                                <textarea type="text" name="description" id="descInput" class="form-control"
+                                <textarea type="text" name="description" id="descInput" class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
+                                           backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"" placeholder="Enter description..."
                                     required>{{ old('description') }}</textarea>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label min-w-[19vw] w-auto">Picture (jpg, jpeg,
+                                <label class="form-label min-w-[19vw] w-auto ">Picture (jpg, jpeg,
                                     png) max 2MB</label>
-                                <input type="file" name="picture" id="imageInput" class="form-control max-w-[15rem]"
-                                    required accept="image/*">
+                                <input type="file" name="picture" id="imageInput" class="form-control max-w-[15rem] bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
+                                           backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50""
+                                    accept="image/*">
                             </div>
 
                             <div class="flex gap-[4vw]">
                                 <div class="flex flex-col items-center">
-                                    <label for="exampleInputEmail1" class="form-label w-auto text-center text-sm md:text-xl">Title
+                                    <label for="exampleInputEmail1"
+                                        class="form-label w-auto text-center text-sm md:text-xl">Title
                                         Color</label>
                                     <input type="color" name="colorTitle" id="colorTitleInput" value="#ffffff"
                                         class="h-10 w-10 border rounded-lg">
                                 </div>
 
                                 <div class="flex flex-col items-center">
-                                    <label for="exampleInputEmail1" class="form-label w-auto text-center text-xs md:text-xl">Description
+                                    <label for="exampleInputEmail1"
+                                        class="form-label w-auto text-center text-xs md:text-xl">Description
                                         Color</label>
                                     <input type="color" name="colorDesc" id="colorDescInput" value="#ffffff"
                                         class="h-10 w-10 border rounded-lg">
                                 </div>
 
                                 <div class="flex flex-col items-center">
-                                    <label for="exampleInputEmail1" class="form-label w-auto text-center text-xs md:text-xl">Background
+                                    <label for="exampleInputEmail1"
+                                        class="form-label w-auto text-center text-xs md:text-xl">Background
                                         Color</label>
                                     <input type="color" name="colorBg" id="colorBgInput" value="#ffffff"
                                         class="h-10 w-10 border rounded-lg">
@@ -138,32 +155,32 @@
                             <div class="mt-4">
                                 <button type="submit"
                                     class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#402C79] to-[#5A3E9D] text-white font-medium shadow-md 
-                                                hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
+                                                                hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
                                     Card</button>
                             </div>
                         </form>
                     </div>
                 </div>
 
-                <div class="card-preview">
+                <div class="card-preview mt-10">
                     <p class="poppins text-3xl text-white font-bold text-center">Preview Card</p>
                     <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500">
                         <!-- Card -->
                         <div id="cardPreview"
                             class="max-w-sm rounded-2xl overflow-hidden w-[20vw] h-[60vh] shadow-lg p-3 space-y-4 mt-4">
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
-                                src="https://via.placeholder.com/300" alt="Preview Image" />
+                                src="https://via.placeholder.com/300" alt="Input your Image`" />
 
                             <!-- Title Section -->
                             <div class="relative">
-                                <h2 id="titlePreview" class="text-xl font-semibold text-gray-800">
+                                <h2 id="titlePreview" class="text-2xl poppins font-bold text-gray-800">
                                     Title Preview
                                 </h2>
                             </div>
 
                             <!-- Description Section -->
                             <div class="relative">
-                                <p id="descPreview" class="text-gray-600 text-sm text-justify">
+                                <p id="descPreview" class="text-gray-600 text-md poppins text-justify">
                                     Description Preview
                                 </p>
                             </div>
@@ -222,46 +239,57 @@
 
             <div class="flex flex-wrap justify-center gap-12">
                 @foreach ($card_data as $data)
-                    @csrf
-                    <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500"
-                        data-id="{{ $data->id }}">
-                        <!-- Card -->
-                        <div
-                            class="max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6">
-                            <img class="w-auto h-[14rem] object-cover rounded-xl"
-                                src="{{ asset('card_pictures/' . $data->picture) }}" />
+                            @csrf
+                            <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500"
+                                data-id="{{ $data->id }}">
+                                <!-- Card -->
+                                <div class="max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6">
+                                @php
+                                    $dummyImages = File::files(public_path('dummy_pict'));
+                                    $randomDummyImage = count($dummyImages) > 0 ? asset('dummy_pict/' . $dummyImages[array_rand($dummyImages)]->getFilename()) : asset('images/enchanted_forest.jpg');
+                                @endphp
+                                    @if ($data->picture == null)
+                                        <img class="w-auto h-[14rem] object-cover rounded-xl"
+                                            src="{{ asset($randomDummyImage) }}" />
+                                    @else
+                                        <img class="w-auto h-[14rem] object-cover rounded-xl"
+                                            src="{{ asset('card_pictures/' . $data->picture) }}" />
+                                    @endif
 
-                            <!-- Title Section -->
-                            <div class="relative">
-                                <h2 id="title-{{ $data->id }}" class="text-xl poppins font-bold text-[{{ $data->colorTitle }}]-800">
-                                    {{$data->title}}
-                                </h2>
-                                <button
-                                    class="btn-edit-title hidden absolute right-0 top-0 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-title"
-                                    data-id="{{ $data->id }}">
-                                    ✏️
+
+                                    <!-- Title Section -->
+                                    <div class="relative">
+                                        <h2 id="title-{{ $data->id }}"
+                                            class="text-xl poppins font-bold text-[{{ $data->colorTitle }}]-800">
+                                            {{$data->title}}
+                                        </h2>
+                                        <button
+                                            class="btn-edit-title hidden absolute right-0 top-0 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-title"
+                                            data-id="{{ $data->id }}">
+                                            ✏️
+                                        </button>
+                                    </div>
+
+                                    <!-- Description Section -->
+                                    <div class="relative">
+                                        <p id="desc-{{ $data->id }}"
+                                            class="text-[{{ $data->colorDesc }}]-600 text-md poppins text-justify">
+                                            {{$data->description}}
+                                        </p>
+                                        <button
+                                            class="btn-edit-desc absolute hidden right-0 top-0 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-description"
+                                            data-id="{{ $data->id }}">
+                                            ✏️
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Delete Button (Centered Below the Card) -->
+                                <button type="button" id="{{ $data->id }}"
+                                    class="btn-delete hidden px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-700 text-white font-medium shadow-md hover:shadow-lg hover:from-red-600 hover:to-red-800 transition duration-300 delete">
+                                    🗑️ Delete
                                 </button>
                             </div>
-
-                            <!-- Description Section -->
-                            <div class="relative">
-                                <p id="desc-{{ $data->id }}" class="text-[{{ $data->colorDesc }}]-600 text-md poppins text-justify">
-                                    {{$data->description}}
-                                </p>
-                                <button
-                                    class="btn-edit-desc absolute hidden right-0 top-0 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-description"
-                                    data-id="{{ $data->id }}">
-                                    ✏️
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Delete Button (Centered Below the Card) -->
-                        <button type="button" id="{{ $data->id }}"
-                            class="btn-delete hidden px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-700 text-white font-medium shadow-md hover:shadow-lg hover:from-red-600 hover:to-red-800 transition duration-300 delete">
-                            🗑️ Delete
-                        </button>
-                    </div>
                 @endforeach
             </div>
 
@@ -322,7 +350,7 @@
                 });
             @endif
 
-                                        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                                                        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
         // Handle Edit Title
         document.querySelectorAll(".edit-title").forEach(button => {

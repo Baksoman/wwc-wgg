@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->string('picture');
+            $table->string('picture')->nullable();
             $table->string('colorTitle');
             $table->string('colorDesc');
             $table->string('colorBg');
