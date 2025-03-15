@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Card;
 use Illuminate\Http\Request;
+use Database\Seeders\CardSeeder;
+use Illuminate\Support\Facades\Artisan;
 
 class CardController extends Controller
 {
@@ -41,7 +43,7 @@ class CardController extends Controller
             $request->file('picture')->move(public_path('card_pictures'), $imageName);
             $card->picture = $imageName;
         }
-        
+
         $card->colorTitle = $request->input('colorTitle');
         $card->colorDesc = $request->input('colorDesc');
         $card->colorBg = $request->input('colorBg');
@@ -71,39 +73,39 @@ class CardController extends Controller
     public function updateTitle(Request $request, $id)
     {
         $card = Card::find($id);
-    
+
         if (!$card) {
             return response()->json(['success' => false, 'message' => 'Card not found'], 404);
         }
-    
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255'
         ]);
-    
+
         $card->title = $validatedData['title'];
         $card->save();
-    
+
         return response()->json(['success' => true, 'message' => 'Title updated successfully']);
     }
-    
+
     public function updateDescription(Request $request, $id)
     {
         $card = Card::find($id);
-    
+
         if (!$card) {
             return response()->json(['success' => false, 'message' => 'Card not found'], 404);
         }
-    
+
         $validatedData = $request->validate([
             'description' => 'required|string'
         ]);
-    
+
         $card->description = $validatedData['description'];
         $card->save();
-    
+
         return response()->json(['success' => true, 'message' => 'Description updated successfully']);
     }
-    
+
     public function deleteData($id)
     {
         $card = card::find($id);
@@ -126,4 +128,20 @@ class CardController extends Controller
 
         return view('cards_index', compact('card_data'));
     }
-}
+
+    public function runSeeder(Request $request)
+    {
+        $count = intval($request->input('count', 1));
+
+        if ($count < 1 || $count > 10) {
+            return response()->json(['message' => 'Please enter a number between 1 and 10'], 400);
+        }
+    
+        // Delete existing cards (Optional)
+        // DB::table('cards')->truncate(); 
+    
+        (new CardSeeder())->run($count);
+    
+        return response()->json(['message' => "$count cards seeded successfully!"]);
+    }
+};

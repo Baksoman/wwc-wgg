@@ -112,7 +112,7 @@
     <main class="w-full h-full overflow-hidden">
 
         <div class="relative w-screen h-screen">
-            <p class="absolute glowing w-screen h-screen flex items-center justify-center antiqua text-7xl lg:text-8xl text-center font-bold text-[#8B48CC] drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
+            <p class="absolute glowing w-screen h-screen flex items-center justify-center antiqua text-7xl lg:text-8xl text-center font-bold text-[#FFFDD0] drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
                 animate-fade-in tracking-wide" data-aos="fade" data-aos-duration="500"
                 data-aos-easing="ease-in-out">
                 Beyond The Inspiration
@@ -128,7 +128,7 @@
 
             <div class="h-screen flex flex-wrap justify-center items-center gap-[4vw]">
                 <div
-                    class="card mt-10 min-w-[20rem] w-[50vw] h-auto bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18">
+                    class="card min-w-[20rem] w-[50vw] h-auto bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18">
                     <div class="card-body">
 
                         <form action="/insertData" method="post" enctype="multipart/form-data">
@@ -192,14 +192,14 @@
                     </div>
                 </div>
 
-                <div class="card-preview mt-10">
+                <div class="card-preview mb-10">
                     <p class="poppins text-3xl text-white font-bold text-center">Preview Card</p>
                     <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500">
                         <!-- Card -->
                         <div id="cardPreview"
                             class="max-w-sm rounded-2xl bg-white/15 overflow-hidden w-[20vw] h-[60vh] shadow-lg p-3 space-y-4 mt-4 border border-white/18">
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
-                                src="https://via.placeholder.com/300" alt="Input your Image`" />
+                                src="{{ asset('images/enchantedForest_bg.jpg') }}" alt="Input your Image`" />
 
                             <!-- Title Section -->
                             <div class="relative">
@@ -219,6 +219,28 @@
                 </div>
             </div>
 
+            <div class="absolute z-10 left-1/2 transform -translate-x-1/2 bottom-0 h-auto">
+                <div class="flex flex-col items-center gap-2">
+                    <select id="cardCount"
+                        class="w-[8.5rem] h-[2rem] rounded-xl bg-gradient-to-b from-[#402C79] to-[#5A3E9D] 
+                            text-white font-medium shadow-md hover:brightness-95 hover:shadow-lg 
+                            focus:ring focus:ring-purple-300 transition-all duration-300 ease-in-out
+                            appearance-none px-4">
+                        <option value="1" class="bg-[#5A3E9D] text-center text-white">1 Card</option>
+                        <option value="2" class="bg-[#5A3E9D] text-center text-white">2 Cards</option>
+                        <option value="3" class="bg-[#5A3E9D] text-center text-white">3 Cards</option>
+                        <option value="4" class="bg-[#5A3E9D] text-center text-white">4 Cards</option>
+                        <option value="5" class="bg-[#5A3E9D] text-center text-white">5 Cards</option>
+                        <option value="6" class="bg-[#5A3E9D] text-center text-white">6 Cards</option>
+                        <option value="7" class="bg-[#5A3E9D] text-center text-white">7 Cards</option>
+                        <option value="8" class="bg-[#5A3E9D] text-center text-white">8 Cards</option>
+                        <option value="9" class="bg-[#5A3E9D] text-center text-white">9 Cards</option>
+                        <option value="10" class="bg-[#5A3E9D] text-center text-white">10 Cards</option>
+                    </select>
+
+                    <button id="runSeederBtn" class="w-[12rem] h-[3rem] rounded-xl bg-gradient-to-r from-[#402C79] to-[#5A3E9D] text-white font-medium shadow-md hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate Random Cards</button>
+                </div>
+            </div>
 
             <svg class="absolute bottom-0 z-[-9]" width="100%" height="100%" viewBox="0 0 1000 1000"
                 xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" overflow="auto" shape-rendering="auto">
@@ -351,11 +373,16 @@
 
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location = "/deleteData/" + $(this).attr('id');
+                    setTimeout(() => {
+                        window.location = "/deleteData/" + $(this).attr('id');
+                    }, 1000);
                     Swal.fire({
                         title: "Deleted!",
                         text: "Your card has been deleted.",
-                        icon: "success"
+                        icon: "success",
+                        timer: 1500,
+                        timerProgressBar: true,
+                        showConfirmButton: false
                     });
                 }
             });
@@ -381,9 +408,8 @@
                 });
             @endif
 
-                        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-        // Handle Edit Title
         document.querySelectorAll(".edit-title").forEach(button => {
             button.addEventListener("click", function () {
                 let cardId = this.dataset.id;
@@ -421,7 +447,7 @@
                                     Swal.fire("Error!", "Failed to update title.", "error");
                                 }
                             })
-                            .catch(error => console.error("Error:", error));
+                    .catch(error => console.error("Error:", error));
                     }
                 });
             });
@@ -501,5 +527,42 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        document.getElementById('runSeederBtn').addEventListener('click', function () {
+    let count = document.getElementById('cardCount').value;
+
+    fetch('/runSeeder', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ count: count })
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.fire({
+            title: "Success!",
+            text: data.message,
+            timer: 1500,
+            icon: "success",
+            showConfirmButton: false
+        });
+
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
+    })
+    .catch(error => {
+        Swal.fire({
+            title: "Error!",
+            text: "Something went wrong. Please try again.",
+            icon: "error",
+            confirmButtonColor: "#d33",
+            confirmButtonText: "OK"
+        });
+        console.error('Error:', error);
+    });
+});
     </script>
 @endsection
