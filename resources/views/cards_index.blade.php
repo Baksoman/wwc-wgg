@@ -110,7 +110,7 @@
 @endsection
 
 @section('content')
-    <main class="w-full h-full overflow-x-hidden">
+    <main class="w-full h-full overflow-hidden">
 
         <div class="relative w-screen h-screen">
 
@@ -272,7 +272,8 @@
                                 data-id="{{ $data->id }}">
                                 <!-- Card -->
                                 <div
-                                    class="card-view hover:scale-105 max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6">
+                                    class="card-view hover:scale-105 max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6"
+                                    data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out" data-aos-anchor-placement="top-bottom">
                                     @php
                                         $dummyImages = File::files(public_path('dummy_pict'));
                                         $randomDummyImage = count($dummyImages) > 0 ? asset('dummy_pict/' . $dummyImages[array_rand($dummyImages)]->getFilename()) : asset('images/enchanted_forest.jpg');

@@ -26,6 +26,27 @@
         body {
             scroll-behavior: smooth;
         }
+
+        *::-webkit-scrollbar {
+            height: 10px;
+            width: 10px;
+        }
+        *::-webkit-scrollbar-track {
+            background-color: #2a0e41; /* Dark purple */
+        }
+
+        *::-webkit-scrollbar-track:hover {
+            background-color: #3b155e; /* Slightly lighter dark purple */
+        }
+
+        *::-webkit-scrollbar-track:active {
+            background-color: #3b155e;
+        }
+
+        *::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-image: linear-gradient(to bottom, transparent, #8c42e9); /* Glowing purple */
+        }
     </style>
     @yield('header')
 </head>
@@ -37,7 +58,9 @@
         integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>AOS.init();</script>
+    <script>AOS.init({
+        once: true,
+       });</script>
     @yield('script')
 
 </body>
