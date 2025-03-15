@@ -79,6 +79,33 @@
                 display: none;
             }
         }
+
+        @keyframes glowing {
+            0% {
+                filter: drop-shadow(0px 0px 10px rgba(75, 0, 130, 0.8)) drop-shadow(0px 0px 20px rgba(48, 0, 98, 0.6));
+            }
+
+            50% {
+                filter: drop-shadow(0px 0px 20px rgba(106, 13, 173, 1)) drop-shadow(0px 0px 30px rgba(70, 0, 140, 1));
+            }
+
+            100% {
+                filter: drop-shadow(0px 0px 10px rgba(75, 0, 130, 0.8)) drop-shadow(0px 0px 20px rgba(48, 0, 98, 0.6));
+            }
+        }
+
+        .glowing {
+            animation: glowing 4s ease-in-out infinite;
+        }
+
+        .card-view{
+            transition: .5s ease;
+        }
+
+        .card-view:hover{
+            transition: .5s ease;
+            cursor: pointer;
+        }
     </style>
 @endsection
 
@@ -87,8 +114,9 @@
 
         <div class="relative w-screen h-screen">
 
-            <p class="absolute w-screen antiqua text-5xl lg:text-7xl text-center font-bold mt-4 text-purple-300 drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
-                      animate-fade-in tracking-wide">
+            <p class="absolute glowing w-screen antiqua text-5xl lg:text-7xl text-center font-bold mt-4 text-[#8B48CC] drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
+                              animate-fade-in tracking-wide" 
+                              data-aos="fade-down" data-aos-duration="500" data-aos-easing="ease-in-out">
                 Beyond The Inspiration
             </p>
 
@@ -106,24 +134,24 @@
                                 <label for="titleInput" class="form-label text-white">Title</label>
                                 <input type="text" name="title" id="titleInput"
                                     class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                           backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
-                                    placeholder="Enter title..."
-                                    value="{{ old('title') }}" required>
-                            </div>                            
+                                                   backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"
+                                    placeholder="Enter title..." value="{{ old('title') }}" required>
+                            </div>
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Description</label>
-                                <textarea type="text" name="description" id="descInput" class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                           backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"" placeholder="Enter description..."
-                                    required>{{ old('description') }}</textarea>
+                                <textarea type="text" name="description" id="descInput"
+                                    class="form-control bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
+                                                   backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50"" placeholder="Enter description..." required>{{ old('description') }}</textarea>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label min-w-[19vw] w-auto ">Picture (jpg, jpeg,
                                     png) max 2MB</label>
-                                <input type="file" name="picture" id="imageInput" class="form-control max-w-[15rem] bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
-                                           backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50""
-                                    accept="image/*">
+                                <input type="file" name="picture" id="imageInput"
+                                    class="form-control max-w-[15rem] bg-transparent text-white placeholder-gray-300 shadow-lg shadow-[rgba(75,0,130,0.5)] 
+                                                   backdrop-blur-[4px] border border-purple-500/25 focus:outline-none focus:ring-2 focus:ring-purple-500/50""
+                                            accept=" image/*">
                             </div>
 
                             <div class="flex gap-[4vw]">
@@ -155,7 +183,7 @@
                             <div class="mt-4">
                                 <button type="submit"
                                     class="px-4 py-2 rounded-lg bg-gradient-to-r from-[#402C79] to-[#5A3E9D] text-white font-medium shadow-md 
-                                                                hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
+                                    hover:brightness-90 hover:shadow-lg transition-all duration-300 ease-in-out">Generate
                                     Card</button>
                             </div>
                         </form>
@@ -167,7 +195,7 @@
                     <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500">
                         <!-- Card -->
                         <div id="cardPreview"
-                            class="max-w-sm rounded-2xl overflow-hidden w-[20vw] h-[60vh] shadow-lg p-3 space-y-4 mt-4">
+                            class="max-w-sm rounded-2xl overflow-hidden w-[20vw] h-[60vh] shadow-lg p-3 space-y-4 mt-4 border border-white/18">
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
                                 src="https://via.placeholder.com/300" alt="Input your Image`" />
 
@@ -212,7 +240,7 @@
             <div class="flex flex-row items-center">
                 @if(request('search'))
                     <a href="{{ route('cards_index') }}"
-                        class="w-[3.5rem] h-[3.5rem] bg-gray-100 hover:bg-gray-200 text-white-700 rounded-full p-3 shadow-md transition">
+                        class="w-[3.5rem] h-[3.5rem] mb-4 bg-gray-100 hover:bg-gray-200 text-white-700 rounded-full p-3 shadow-md transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
@@ -221,7 +249,7 @@
                 @endif
 
                 <form class="mb-4" action="{{ route('cards_index') }}" method="GET">
-                    <div class="relative w-[80vw] border-2 border-gray-100 m-4 rounded-lg">
+                    <div class="relative w-[60vw] md:w-[80vw] border-2 border-gray-100 m-4 rounded-lg">
                         <div class="absolute top-4 left-3">
                             <i class="fa fa-search text-gray-400 z-20 hover:text-gray-500"></i>
                         </div>
@@ -243,14 +271,14 @@
                             <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500"
                                 data-id="{{ $data->id }}">
                                 <!-- Card -->
-                                <div class="max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6">
-                                @php
-                                    $dummyImages = File::files(public_path('dummy_pict'));
-                                    $randomDummyImage = count($dummyImages) > 0 ? asset('dummy_pict/' . $dummyImages[array_rand($dummyImages)]->getFilename()) : asset('images/enchanted_forest.jpg');
-                                @endphp
+                                <div
+                                    class="card-view hover:scale-105 max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6">
+                                    @php
+                                        $dummyImages = File::files(public_path('dummy_pict'));
+                                        $randomDummyImage = count($dummyImages) > 0 ? asset('dummy_pict/' . $dummyImages[array_rand($dummyImages)]->getFilename()) : asset('images/enchanted_forest.jpg');
+                                    @endphp
                                     @if ($data->picture == null)
-                                        <img class="w-auto h-[14rem] object-cover rounded-xl"
-                                            src="{{ asset($randomDummyImage) }}" />
+                                        <img class="w-auto h-[14rem] object-cover rounded-xl" src="{{ asset($randomDummyImage) }}" />
                                     @else
                                         <img class="w-auto h-[14rem] object-cover rounded-xl"
                                             src="{{ asset('card_pictures/' . $data->picture) }}" />
@@ -350,7 +378,7 @@
                 });
             @endif
 
-                                                        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+                                                                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
         // Handle Edit Title
         document.querySelectorAll(".edit-title").forEach(button => {
