@@ -36,17 +36,17 @@
             }
         }
 
-        @keyframes orange-glow {
+        @keyframes glowing-lite {
             0% {
-                filter: drop-shadow(0 0 5px rgba(218, 112, 32, 0.6));
+                filter: drop-shadow(0px 0px 5px rgba(255, 253, 208, 0.8));
             }
 
             50% {
-                filter: drop-shadow(0 0 10px rgba(255, 140, 0, 0.9));
+                filter: drop-shadow(0px 0px 10px rgba(255, 255, 220, 1));
             }
 
             100% {
-                filter: drop-shadow(0 0 5px rgba(218, 112, 32, 0.6));
+                filter: drop-shadow(0px 0px 5px rgba(255, 253, 208, 0.8));
             }
         }
 
@@ -55,7 +55,7 @@
         }
 
         .card-container {
-            animation: orange-glow 4s infinite;
+            animation: glowing-lite 4s infinite;
         }
 
         .poppins {
@@ -66,6 +66,10 @@
             font-family: 'Uncial Antiqua', Arial, Helvetica, sans-serif;
         }
 
+        .racing {
+            font-family: 'Racing Sans One', Arial, Helvetica, sans-serif;
+        }
+
         @media (max-width: 700px) {
             .card-preview {
                 display: none;
@@ -74,20 +78,16 @@
 
         @keyframes glowing {
             0% {
-                filter: drop-shadow(0px 0px 10px rgba(75, 0, 130, 0.8)) drop-shadow(0px 0px 20px rgba(48, 0, 98, 0.6));
+                filter: drop-shadow(0px 0px 10px rgba(255, 253, 208, 0.8)) drop-shadow(0px 0px 20px rgba(255, 253, 180, 0.6));
             }
 
             50% {
-                filter: drop-shadow(0px 0px 20px rgba(106, 13, 173, 1)) drop-shadow(0px 0px 30px rgba(70, 0, 140, 1));
+                filter: drop-shadow(0px 0px 20px rgba(255, 255, 220, 1)) drop-shadow(0px 0px 30px rgba(255, 253, 190, 0.9));
             }
 
             100% {
-                filter: drop-shadow(0px 0px 10px rgba(75, 0, 130, 0.8)) drop-shadow(0px 0px 20px rgba(48, 0, 98, 0.6));
+                filter: drop-shadow(0px 0px 10px rgba(255, 253, 208, 0.8)) drop-shadow(0px 0px 20px rgba(255, 253, 180, 0.6));
             }
-        }
-
-        .glowing {
-            animation: glowing 4s ease-in-out infinite;
         }
 
         .card-view {
@@ -105,6 +105,53 @@
             backdrop-filter: blur(20px);
             background: rgba(255, 255, 255, 0.3);
         }
+
+        .hero-text {
+            position: relative;
+            font-family: 'Uncial Antiqua', serif;
+            font-weight: bold;
+            color: #FFFDD0;
+            font-size: 6rem;
+            text-align: center;
+            animation: glowing 4s ease-in-out infinite;
+        }
+
+        .hero-text span {
+            line-height: 7rem;   
+            transition: all .5s ease !important;   
+        }
+
+        .hero-text span:hover {
+            font-size: 7rem;
+            transition: all .5s ease;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-text span {
+                font-size: 4rem;
+                line-height: normal;
+            }
+
+            .hero-text span:hover {
+                font-size: 5rem;
+                transition: all .5s ease;
+                cursor: pointer;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .hero-text span {
+                font-size: 3rem;
+                line-height: normal;
+            }
+
+            .hero-text span:hover {
+                font-size: 4rem;
+                transition: all .5s ease;
+                cursor: pointer;
+            }
+        }
     </style>
 @endsection
 
@@ -114,16 +161,20 @@
         {{-- div 1 --}}
         <div class="relative w-screen h-screen">
 
-            {{-- Hero Text --}}
-            <p class="absolute glowing w-screen h-screen flex items-center justify-center antiqua text-7xl lg:text-8xl text-center font-bold text-[#FFFDD0] drop-shadow-[0_4px_10px_rgba(128,90,213,0.8)] 
-                animate-fade-in tracking-wide" data-aos="fade" data-aos-duration="500"
-                data-aos-easing="ease-in-out">
-                Beyond The Inspiration
-            </p>
-
             {{-- Background --}}
             <img src="{{ asset('images/enchantedForest_bg_flip.jpg') }}" alt="bg"
-                class="w-screen h-screen object-cover absolute z-[-10]">
+            class="w-screen h-screen object-cover absolute z-[-10]">
+
+            {{-- Hero Text --}}
+            <div class="w-screen h-screen flex flex-col items-center justify-center">
+                <p class="hero-text" data-aos="fade" data-aos-duration="700" data-aos-easing="ease">
+                    <span>B</span><span>e</span><span>y</span><span>o</span><span>n</span><span>d</span> 
+                    <span>T</span><span>h</span><span>e</span> 
+                    <span>I</span><span>m</span><span>a</span><span>g</span><span>i</span><span>n</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span>
+                </p>
+                <p class="relative text-center text-[#fffdd0] racing text-3xl lg:text-4xl"
+                data-aos="fade-down" data-aos-delay="300" data-aos-duration="500" data-aos-easing="ease">Where creativity meets limitless possibilities</p>
+            </div>
         </div>
 
         {{-- div 2 --}}
@@ -217,8 +268,10 @@
                 <div class="card-preview mb-10">
                     <p class="poppins text-3xl text-white font-bold text-center">Preview Card</p>
                     <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500">
+
+                        {{-- BG Preview --}}
                         <div id="cardPreview"
-                            class="max-w-sm rounded-2xl bg-white/15 overflow-hidden w-[20vw] h-[60vh] shadow-lg p-3 space-y-4 mt-4 border border-white/18">
+                            class="max-w-sm rounded-2xl bg-white/100 overflow-hidden w-[20vw] h-[60vh] shadow-lg space-y-4 mt-4 border border-white/18">
                             
                             {{-- Image Preview --}}
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
@@ -226,14 +279,14 @@
 
                             {{-- Title Preview --}}
                             <div class="relative">
-                                <h2 id="titlePreview" class="text-2xl poppins font-bold text-gray-800">
+                                <h2 id="titlePreview" class="text-2xl ml-3 mr-3 poppins font-bold text-gray-800">
                                     Title Preview
                                 </h2>
                             </div>
 
                             {{-- Description Preview --}}
                             <div class="relative">
-                                <p id="descPreview" class="text-gray-600 text-md poppins text-justify">
+                                <p id="descPreview" class="text-gray-600 ml-3 mr-3 text-md poppins text-justify">
                                     Description Preview
                                 </p>
                             </div>
@@ -334,7 +387,7 @@
                             <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500"
                                 data-id="{{ $data->id }}">
                                 {{-- Card Body --}}
-                                <div class="card-view max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg p-3 space-y-4 mb-6"
+                                <div class="card-view max-w-sm rounded-2xl overflow-hidden w-[20rem] h-[30rem] bg-[{{ $data->colorBg }}] shadow-lg space-y-4 mb-6"
                                     data-aos="fade-up" data-aos-duration="500" data-aos-easing="ease-in-out"
                                     data-aos-anchor-placement="top-bottom">
                                     @php
@@ -352,11 +405,11 @@
                                     {{-- Title Section --}}
                                     <div class="relative">
                                         <h2 id="title-{{ $data->id }}"
-                                            class="text-xl poppins font-bold text-[{{ $data->colorTitle }}]">
+                                            class="text-xl poppins font-bold mr-3 ml-3 text-[{{ $data->colorTitle }}]">
                                             {{$data->title}}
                                         </h2>
                                         <button
-                                            class="btn-edit-title hidden absolute right-0 top-0 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-title"
+                                            class="btn-edit-title hidden absolute right-0 top-0 mr-3 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-title"
                                             data-id="{{ $data->id }}">
                                             ✏️
                                         </button>
@@ -365,11 +418,11 @@
                                     {{-- Description Section --}}
                                     <div class="relative">
                                         <p id="desc-{{ $data->id }}"
-                                            class="text-[{{ $data->colorDesc }}] text-md poppins text-justify">
+                                            class="text-[{{ $data->colorDesc }}] text-md mr-3 ml-3 poppins text-justify">
                                             {{$data->description}}
                                         </p>
                                         <button
-                                            class="btn-edit-desc absolute hidden right-0 top-0 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-description"
+                                            class="btn-edit-desc absolute hidden right-0 top-0 mr-3 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-description"
                                             data-id="{{ $data->id }}">
                                             ✏️
                                         </button>
@@ -378,7 +431,7 @@
 
                                 {{-- Delete Button --}}
                                 <button type="button" id="{{ $data->id }}"
-                                    class="btn-delete hidden px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-700 text-white font-medium shadow-md hover:shadow-lg hover:from-red-600 hover:to-red-800 transition duration-300 delete">
+                                    class="btn-delete hidden mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-red-500 to-red-700 text-white font-medium shadow-md hover:shadow-lg hover:from-red-600 hover:to-red-800 transition duration-300 delete">
                                     🗑️ Delete
                                 </button>
                             </div>

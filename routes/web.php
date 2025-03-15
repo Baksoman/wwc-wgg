@@ -9,7 +9,7 @@ Route::get('/', [CardController::class, 'index'])->name('cards_index');
 
 Route::post('/insertData', [CardController::class, 'insertData'])->name('insertData');
 
-Route::get('/viewData/{id}', [CardController::class, 'viewData'])->name('viewData');
+// Route::get('/viewData/{id}', [CardController::class, 'viewData'])->name('viewData');
 
 // Route::post('/updateData/{id}', [CardController::class, 'updateData'])->name('updateData');
 Route::put('/updateTitle/{id}', [CardController::class, 'updateTitle']);
