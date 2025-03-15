@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Card;
 use Illuminate\Http\Request;
 use Database\Seeders\CardSeeder;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Artisan;
 
 class CardController extends Controller
@@ -78,11 +79,23 @@ class CardController extends Controller
             return response()->json(['success' => false, 'message' => 'Card not found'], 404);
         }
 
-        $validatedData = $request->validate([
-            'title' => 'required|string|max:255'
-        ]);
+        $messages = [
+            'title.max' => 'The title may not be greater than 50 characters.',
+        ];
 
-        $card->title = $validatedData['title'];
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:50'
+        ], $messages);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()->all()
+            ], 422);
+        }
+
+        $card->title = $request->title;
         $card->save();
 
         return response()->json(['success' => true, 'message' => 'Title updated successfully']);
@@ -96,11 +109,23 @@ class CardController extends Controller
             return response()->json(['success' => false, 'message' => 'Card not found'], 404);
         }
 
-        $validatedData = $request->validate([
-            'description' => 'required|string'
-        ]);
+        $messages = [
+            'description.max' => 'The description may not be greater than 255 characters.',
+        ];
 
-        $card->description = $validatedData['description'];
+        $validator = Validator::make($request->all(), [
+            'description' => 'required|string|max:255'
+        ], $messages);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()->all()
+            ], 422);
+        }
+
+        $card->description = $request->description;
         $card->save();
 
         return response()->json(['success' => true, 'message' => 'Description updated successfully']);
@@ -137,7 +162,6 @@ class CardController extends Controller
             return response()->json(['message' => 'Please enter a number between 1 and 10'], 400);
         }
     
-        // Delete existing cards (Optional)
         // DB::table('cards')->truncate(); 
     
         (new CardSeeder())->run($count);
