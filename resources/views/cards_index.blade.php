@@ -325,7 +325,7 @@
     </main>
 @endsection
 @section('script')
-    <script>
+    <script defer>
         document.querySelectorAll("[data-id]").forEach(card => {
             card.addEventListener("click", function () {
                 let btnEditTitle = this.querySelector(".btn-edit-title");
@@ -379,7 +379,7 @@
                 });
             @endif
 
-                                                                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
         // Handle Edit Title
         document.querySelectorAll(".edit-title").forEach(button => {
