@@ -495,6 +495,7 @@
                                 </button>
                             </div>
                 @endforeach
+                <p class="text-gray-400 text-9xl">Copyright by Bryan</p>
             </div>
 
     </main>
