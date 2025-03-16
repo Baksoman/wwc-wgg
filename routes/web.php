@@ -14,6 +14,7 @@ Route::post('/insertData', [CardController::class, 'insertData'])->name('insertD
 // Route::post('/updateData/{id}', [CardController::class, 'updateData'])->name('updateData');
 Route::put('/updateTitle/{id}', [CardController::class, 'updateTitle']);
 Route::put('/updateDescription/{id}', [CardController::class, 'updateDescription']);
+Route::post('/updatePicture/{id}', [CardController::class, 'updatePicture']);
 
 Route::get('/deleteData/{id}', [CardController::class, 'deleteData'])->name('deleteData');
 

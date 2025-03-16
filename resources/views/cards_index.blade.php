@@ -450,7 +450,7 @@
                                     <label for="exampleInputEmail1"
                                         class="form-label w-auto text-center text-sm md:text-xl">Title
                                         Color</label>
-                                    <input type="color" name="colorTitle" id="colorTitleInput" value="#ffffff"
+                                    <input type="color" name="colorTitle" id="colorTitleInput" value="#000000"
                                         class="h-10 w-10 border rounded-lg">
                                 </div>
 
@@ -459,7 +459,7 @@
                                     <label for="exampleInputEmail1"
                                         class="form-label w-auto text-center text-xs md:text-xl">Description
                                         Color</label>
-                                    <input type="color" name="colorDesc" id="colorDescInput" value="#ffffff"
+                                    <input type="color" name="colorDesc" id="colorDescInput" value="#000000"
                                         class="h-10 w-10 border rounded-lg">
                                 </div>
 
@@ -632,10 +632,19 @@
                                         $randomDummyImage = count($dummyImages) > 0 ? asset('dummy_pict/' . $dummyImages[array_rand($dummyImages)]->getFilename()) : asset('images/enchanted_forest.jpg');
                                     @endphp
                                     @if ($data->picture == null)
+                                    <div>
                                         <img class="w-auto h-[14rem] object-cover rounded-xl" src="{{ asset($randomDummyImage) }}" />
-                                    @else
-                                        <img class="w-auto h-[14rem] object-cover rounded-xl"
+                                    </div>
+                                    @else 
+                                    <div class="relative card-container" data-id="{{ $data->id }}">
+                                        <img id="picture-{{ $data->id }}" class="w-auto h-[14rem] object-cover rounded-xl"
                                             src="{{ asset('card_pictures/' . $data->picture) }}" />
+                                        <button
+                                            class="btn-edit-picture hidden absolute right-0 top-0 mt-3 mr-3 px-2 py-1 text-sm bg-white/15 shadow-lg shadow-[rgba(31,38,135,0.37)] backdrop-blur-[4px] border border-white/18 text-white rounded-md hover:bg-black/20 transition duration-300 edit-picture"
+                                            data-id="{{ $data->id }}" aria-label="Edit Picture">
+                                            ✏️
+                                        </button>
+                                    </div>                                    
                                     @endif
 
 
@@ -692,14 +701,17 @@
         document.getElementById("year").textContent = new Date().getFullYear();
 
         // edit + delete button visibility
-        document.querySelectorAll("[data-id]").forEach(card => {
-            card.addEventListener("click", function () {
-                let btnEditTitle = this.querySelector(".btn-edit-title");
-                let btnEditDesc = this.querySelector(".btn-edit-desc");
-                let btnDelete = this.querySelector(".btn-delete");
-                btnEditTitle.classList.toggle("hidden");
-                btnEditDesc.classList.toggle("hidden");
-                btnDelete.classList.toggle("hidden");
+        document.querySelectorAll(".card-container").forEach(card => {
+        card.addEventListener("click", function () {
+            let btnEditTitle = this.querySelector(".btn-edit-title");
+            let btnEditDesc = this.querySelector(".btn-edit-desc");
+            let btnEditPict = this.querySelector(".btn-edit-picture");
+            let btnDelete = this.querySelector(".btn-delete");
+
+            btnEditTitle.classList.toggle("hidden");
+            btnEditDesc.classList.toggle("hidden");
+            btnEditPict.classList.toggle("hidden");
+            btnDelete.classList.toggle("hidden");
             });
         });
 
@@ -762,7 +774,6 @@
             });
         });
 
-
     </script>
     <script>
 
@@ -805,17 +816,85 @@
             });
         @endif
 
-            @if ($errors->any())
-                let errors = @json($errors->all());
+        @if ($errors->any())
+            let errors = @json($errors->all());
 
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Input Error',
-                    html: errors.join('<br>'),
-                });
-            @endif
+            Swal.fire({
+                icon: 'error',
+                title: 'Input Error',
+                html: errors.join('<br>'),
+            });
+        @endif
 
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            // Edit Picture
+            document.querySelectorAll(".edit-picture").forEach(button => {
+            button.addEventListener("click", function (event) {
+                event.stopPropagation();
+
+                let cardId = this.dataset.id;
+                let pictureElement = document.getElementById(`picture-${cardId}`);
+
+                Swal.fire({
+                    title: "Edit Picture",
+                    input: "file",
+                    inputAttributes: {
+                        accept: "image/*",
+                        "aria-label": "Upload your picture"
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: "Save",
+                    preConfirm: (file) => {
+                        if (!file) {
+                            Swal.showValidationMessage("Please select an image!");
+                            return false;
+                        }
+                        return file;
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed && result.value) {
+                        let formData = new FormData();
+                        formData.append("picture", result.value);
+
+                        fetch(`/updatePicture/${cardId}`, {
+                            method: "POST",
+                            headers: {
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                            },
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                pictureElement.src = `/card_pictures/${data.newPhoto}`;
+                                Swal.fire({
+                                    title: "Updated!",
+                                    text: "Picture updated successfully",
+                                    timer: 1500,
+                                    icon: "success",
+                                    showConfirmButton: false
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "Validation Error!",
+                                    icon: "error",
+                                    html: data.errors ? data.errors.join("<br>") : data.message,
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Error!",
+                                text: "Something went wrong. Please try again.",
+                            });
+                            console.error("Error:", error);
+                        });
+                    }
+                });
+            });
+        });
 
         // Edit Title Swal
         document.querySelectorAll(".edit-title").forEach(button => {

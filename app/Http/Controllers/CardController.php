@@ -6,7 +6,7 @@ use App\Models\Card;
 use Illuminate\Http\Request;
 use Database\Seeders\CardSeeder;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 
 class CardController extends Controller
 {
@@ -71,6 +71,53 @@ class CardController extends Controller
     //     return redirect()->route('cards_index')->with('successUpdate', 'Card Updated Successfully');
     // }
 
+    public function updatePicture(Request $request, $id)
+    {
+        $card = Card::find($id);
+    
+        if (!$card) {
+            return response()->json(['success' => false, 'message' => 'Card not found'], 404);
+        }
+    
+        $messages = [
+            'picture.image' => 'The file must be an image.',
+            'picture.mimes' => 'The image must be a file of type: jpg, jpeg, png.',
+            'picture.max' => 'The image size must not exceed 2MB.'
+        ];
+    
+        $validator = Validator::make($request->all(), [
+            'picture' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+        ], $messages);
+    
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()->all()
+            ], 422);
+        }
+    
+        if ($card->picture && !str_contains($card->picture, 'dummy_pict/')) {
+            $oldPhotoPath = public_path('card_pictures/' . $card->picture);
+            if (File::exists($oldPhotoPath)) {
+                File::delete($oldPhotoPath);
+            }
+        }
+    
+        $newPhoto = $request->file('picture');
+        $newPhotoName = time() . '_' . $newPhoto->getClientOriginalName();
+        $newPhoto->move(public_path('card_pictures'), $newPhotoName);
+    
+        $card->picture = $newPhotoName;
+        $card->save();
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Picture updated successfully',
+            'newPhoto' => $newPhotoName
+        ]);
+    }
+
     public function updateTitle(Request $request, $id)
     {
         $card = Card::find($id);
@@ -86,7 +133,7 @@ class CardController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:50'
         ], $messages);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -116,7 +163,7 @@ class CardController extends Controller
         $validator = Validator::make($request->all(), [
             'description' => 'required|string|max:255'
         ], $messages);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -134,6 +181,15 @@ class CardController extends Controller
     public function deleteData($id)
     {
         $card = card::find($id);
+
+        if ($card) {
+            if ($card->picture) {
+                $photoPath = public_path('card_pictures/' . $card->picture);
+                if (File::exists($photoPath)) {
+                    File::delete($photoPath);
+                }
+            }
+        }
         $card->delete();
         return redirect()->route('cards_index')->with('successDelete', 'Card Deleted Successfully');
     }
@@ -161,11 +217,11 @@ class CardController extends Controller
         if ($count < 1 || $count > 10) {
             return response()->json(['message' => 'Please enter a number between 1 and 10'], 400);
         }
-    
+
         // DB::table('cards')->truncate(); 
-    
+
         (new CardSeeder())->run($count);
-    
+
         return response()->json(['message' => "$count cards seeded successfully!"]);
     }
 };
