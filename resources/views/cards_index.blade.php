@@ -121,22 +121,10 @@
             transition: all .5s ease !important;   
         }
 
-        .hero-text span:hover {
-            font-size: 7rem;
-            transition: all .5s ease;
-            cursor: pointer;
-        }
-
         @media (max-width: 1024px) {
             .hero-text span {
                 font-size: 4rem;
                 line-height: normal;
-            }
-
-            .hero-text span:hover {
-                font-size: 5rem;
-                transition: all .5s ease;
-                cursor: pointer;
             }
         }
 
@@ -144,12 +132,6 @@
             .hero-text span {
                 font-size: 3rem;
                 line-height: normal;
-            }
-
-            .hero-text span:hover {
-                font-size: 4rem;
-                transition: all .5s ease;
-                cursor: pointer;
             }
         }
 
