@@ -208,10 +208,10 @@
 
             {{-- Background --}}
             <img src="{{ asset('images/enchantedForest_bg_flip.jpg') }}" alt="bg"
-            class="w-screen h-screen object-cover absolute z-[-10]">
+            class="w-screen h-screen object-cover absolute z-[-12]">
 
             {{-- Hero Text --}}
-            <div class="w-screen h-screen flex flex-col items-center justify-center">
+            <div class="hero-text-div w-screen h-screen flex flex-col absolute z-[-11] items-center justify-start">
                 <p class="hero-text" data-aos="fade" data-aos-duration="700" data-aos-easing="ease">
                     <span>B</span><span>e</span><span>y</span><span>o</span><span>n</span><span>d</span> 
                     <span>T</span><span>h</span><span>e</span> 
@@ -220,6 +220,9 @@
                 <p class="relative text-center text-[#fffdd0] racing text-3xl lg:text-4xl"
                 data-aos="fade-down" data-aos-delay="300" data-aos-duration="500" data-aos-easing="ease">Where creativity meets limitless possibilities</p>
             </div>
+
+            <img src="{{ asset('images/rock_bg_flip.png') }}" alt="bg"
+            class="w-screen h-screen bottom-0 object-cover absolute">
 
             {{-- Dust Particles --}}
             <div class="particle"></div>
@@ -237,14 +240,24 @@
         </div>
 
         {{-- div 2 --}}
-        <div class="relative w-screen h-screen">
+        <div class="relative w-screen h-screen bg-white/10">
 
             {{-- Background --}}
             <img src="{{ asset('images/enchantedForest_bg.jpg') }}" alt="bg"
                 class="bg-div-2 w-screen h-screen object-cover absolute z-[-10] overflow-x-hidden">
 
+                <div class="hero-text-div-flip w-screen h-screen flex flex-col absolute z-[-8] items-center justify-center scale-y-[-1]">
+                    <p class="hero-text blur-sm">
+                        Beyond the Imagination
+                    </p>
+                    <p class="relative text-center text-[#fffdd0] racing text-3xl lg:text-4xl blur-[1px]">Where creativity meets limitless possibilities</p>
+                </div>                
+            
+            <img src="{{ asset('images/rock_bg.png') }}" alt="bg"
+                class="w-screen h-screen top-0 object-cover absolute">
+
             {{-- Generator + Preview Div --}}
-            <div class="h-screen flex flex-wrap justify-center items-center gap-[4vw]">
+            <div class="h-screen flex flex-wrap justify-center items-center gap-[4vw] relative z-2">
                 
                 {{-- Card Generator --}}
                 <div
@@ -324,13 +337,13 @@
                 </div>
 
                 {{-- Card Preview div--}}
-                <div class="card-preview mb-10">
-                    <p class="poppins text-3xl text-white font-bold text-center">Preview Card</p>
+                <div class="card-preview flex justify-center items-center">
+
                     <div class="card-container flex flex-col items-center min-w-[20rem] w-auto transition duration-500">
 
                         {{-- BG Preview --}}
                         <div id="cardPreview"
-                            class="max-w-sm rounded-2xl bg-white/100 overflow-hidden w-[20vw] h-[60vh] shadow-lg space-y-4 mt-4 border border-white/18">
+                            class="max-w-sm rounded-2xl bg-white/100 overflow-hidden w-[20vw] h-[60vh] shadow-lg space-y-4 border border-white/18">
                             
                             {{-- Image Preview --}}
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
@@ -351,6 +364,21 @@
                             </div>
                         </div>
                     </div>
+
+                    <p class="poppins text-3xl text-white font-bold text-center">
+                        <span class="block">P</span>
+                        <span class="block">r</span>
+                        <span class="block">e</span>
+                        <span class="block">v</span>
+                        <span class="block">i</span>
+                        <span class="block">e</span>
+                        <span class="block">w</span>
+                        <span class="block mt-4">C</span>
+                        <span class="block">a</span>
+                        <span class="block">r</span>
+                        <span class="block">d</span>
+                    </p>
+
                 </div>
             </div>
 
@@ -382,7 +410,7 @@
             </div>
 
             {{-- Wave --}}
-            <svg class="absolute bottom-0 z-[-9]" width="100%" height="100%" viewBox="0 0 1000 1000"
+            <svg class="absolute bottom-0 z-[1]" width="100%" height="100%" viewBox="0 0 1000 1000"
                 xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" overflow="auto" shape-rendering="auto">
                 <defs>
                     <path id="wavepath"
@@ -505,8 +533,15 @@
 @section('script')
     <script defer>
 
+        // refresh to top
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        };
+
+        //copyright watermark
         document.getElementById("year").textContent = new Date().getFullYear();
 
+        // edit + delete button visibility
         document.querySelectorAll("[data-id]").forEach(card => {
             card.addEventListener("click", function () {
                 let btnEditTitle = this.querySelector(".btn-edit-title");
@@ -518,6 +553,70 @@
             });
         });
 
+        // live card preview
+        document.getElementById("titleInput").addEventListener("input", function () {
+            document.getElementById("titlePreview").innerText = this.value || "Title Preview";
+        });
+
+        document.getElementById("descInput").addEventListener("input", function () {
+            document.getElementById("descPreview").innerText = this.value || "Description Preview";
+        });
+
+        document.getElementById("colorTitleInput").addEventListener("input", function () {
+            document.getElementById("titlePreview").style.color = this.value;
+        });
+
+        document.getElementById("colorDescInput").addEventListener("input", function () {
+            document.getElementById("descPreview").style.color = this.value;
+        });
+
+        document.getElementById("colorBgInput").addEventListener("input", function () {
+            document.getElementById("cardPreview").style.backgroundColor = this.value;
+        });
+
+        document.getElementById("imageInput").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("imagePreview").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        window.addEventListener("load", function() {
+
+            gsap.to('.hero-text-div', {
+                yPercent: 90,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: '.hero-text-div',
+                    start: 'top center',
+                    end: 'bottom+=80% top',
+                    scrub: 0.3
+                }
+            });
+
+            gsap.to('.hero-text-div-flip', {
+                yPercent: -74,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: '.hero-text-div-flip',
+                    start: 'top bottom',
+                    end: 'bottom+=80% top',
+                    scrub: 0.3
+                }
+            });
+        });
+
+        
+    </script>
+    <script>
+
+        // Delete Card Swal
         $(document).on('click', '.delete', function () {
             Swal.fire({
                 title: "Are you sure?",
@@ -545,6 +644,7 @@
             });
         });
 
+        // Generate Card Swal
         @if (session('successInsert'))
             Swal.fire({
                 title: "{{ session('successInsert') }}",
@@ -567,7 +667,7 @@
 
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-        // Handle Edit Title
+        // Edit Title Swal
         document.querySelectorAll(".edit-title").forEach(button => {
         button.addEventListener("click", function () {
             let cardId = this.dataset.id;
@@ -629,7 +729,7 @@
         });
 
 
-        // Handle Edit Description
+        // Edit Description Swal
         document.querySelectorAll(".edit-description").forEach(button => {
         button.addEventListener("click", function () {
             let cardId = this.dataset.id;
@@ -690,37 +790,7 @@
             });
         });
 
-        document.getElementById("titleInput").addEventListener("input", function () {
-            document.getElementById("titlePreview").innerText = this.value || "Title Preview";
-        });
-
-        document.getElementById("descInput").addEventListener("input", function () {
-            document.getElementById("descPreview").innerText = this.value || "Description Preview";
-        });
-
-        document.getElementById("colorTitleInput").addEventListener("input", function () {
-            document.getElementById("titlePreview").style.color = this.value;
-        });
-
-        document.getElementById("colorDescInput").addEventListener("input", function () {
-            document.getElementById("descPreview").style.color = this.value;
-        });
-
-        document.getElementById("colorBgInput").addEventListener("input", function () {
-            document.getElementById("cardPreview").style.backgroundColor = this.value;
-        });
-
-        document.getElementById("imageInput").addEventListener("change", function (event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById("imagePreview").src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
+        // Generate Seeder Card Swal
         document.getElementById('runSeederBtn').addEventListener('click', function () {
             let count = document.getElementById('cardCount').value;
 
