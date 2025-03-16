@@ -385,7 +385,7 @@
         </div>
 
         {{-- div 2 --}}
-        <div class="relative w-screen h-screen bg-white/10">
+        <div class="relative w-screen h-screen bg-black/20">
 
             {{-- Background --}}
             <img src="{{ asset('images/enchantedForest_bg.jpg') }}" alt="bg"
@@ -402,7 +402,7 @@
             </div>
 
             {{-- Rock Background --}}
-            <img src="{{ asset('images/rock_bg.png') }}" alt="bg" class="w-screen h-screen top-0 object-cover absolute">
+            <img src="{{ asset('images/rock_bg.png') }}" alt="bg" class="w-screen h-screen top-0 object-cover absolute z-[-7]">
 
             {{-- Generator + Preview Div --}}
             <div class="h-screen flex flex-wrap justify-center items-center gap-[4vw] relative z-2">
@@ -491,7 +491,7 @@
 
                         {{-- BG Preview --}}
                         <div id="cardPreview"
-                            class="max-w-sm rounded-2xl bg-white/100 overflow-hidden w-[20vw] h-[60vh] shadow-lg space-y-4 border border-white/18">
+                            class="max-w-sm rounded-2xl bg-white/100 overflow-hidden w-[20rem] h-[30rem] shadow-lg space-y-4 border border-white/18">
 
                             {{-- Image Preview --}}
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
