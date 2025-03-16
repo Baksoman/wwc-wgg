@@ -495,13 +495,18 @@
                                 </button>
                             </div>
                 @endforeach
-                <p class="text-gray-400 text-9xl">Copyright by Bryan</p>
             </div>
+            <footer class="w-full poppins font-bold text-center py-3 text-[#fffdd0]">
+                <p>&copy; <span id="year"></span> By Baksoman, All Rights Reserved</p>
+            </footer>
 
     </main>
 @endsection
 @section('script')
     <script defer>
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+
         document.querySelectorAll("[data-id]").forEach(card => {
             card.addEventListener("click", function () {
                 let btnEditTitle = this.querySelector(".btn-edit-title");
