@@ -152,6 +152,51 @@
                 cursor: pointer;
             }
         }
+
+        @keyframes float {
+            0% { 
+                transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+            }
+            20% { 
+                transform: translateY(-10px) translateX(5px) rotate(2deg) scale(1.02); 
+            }
+            40% { 
+                transform: translateY(-20px) translateX(-8px) rotate(-3deg) scale(1.04); 
+            }
+            60% { 
+                transform: translateY(-15px) translateX(12px) rotate(1deg) scale(1.03); 
+            }
+            80% { 
+                transform: translateY(-25px) translateX(-10px) rotate(-2deg) scale(1.01); 
+            }
+            100% { 
+                transform: translateY(-30px) translateX(7px) rotate(0deg) scale(1); 
+            }
+        }
+
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 253, 208, 1);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 242, 0, 0.8), 0 0 20px rgba(255, 250, 208,0.7);
+            animation: float 12s infinite ease-in-out alternate;
+            top: 50%;
+            left: 50%;
+        }
+
+        .delay-1 { animation-delay: 1s; left: 20%; top: 70%; }
+        .delay-2 { animation-delay: 2s; left: 70%; top: 30%; }
+        .delay-3 { animation-delay: 3s; left: 40%; top: 80%; }
+        .delay-4 { animation-delay: 4s; left: 10%; top: 50%; }
+        .delay-5 { animation-delay: 5s; left: 80%; top: 90%; }
+        .delay-6 { animation-delay: 6s; left: 30%; top: 40%; }
+        .delay-7 { animation-delay: 7s; left: 10%; top: 10%; }
+        .delay-8 { animation-delay: 8s; left: 90%; top: 90%; }
+        .delay-9 { animation-delay: 9s; left: 20%; top: 20%; }
+        .delay-10 { animation-delay: 10s; left: 30%; top: 60%; }
     </style>
 @endsection
 
@@ -175,6 +220,20 @@
                 <p class="relative text-center text-[#fffdd0] racing text-3xl lg:text-4xl"
                 data-aos="fade-down" data-aos-delay="300" data-aos-duration="500" data-aos-easing="ease">Where creativity meets limitless possibilities</p>
             </div>
+
+            {{-- Dust Particles --}}
+            <div class="particle"></div>
+            <div class="particle delay-1"></div>
+            <div class="particle delay-2"></div>
+            <div class="particle delay-3"></div>
+            <div class="particle delay-4"></div>
+            <div class="particle delay-5"></div>
+            <div class="particle delay-6"></div>
+            <div class="particle delay-7"></div>
+            <div class="particle delay-8"></div>
+            <div class="particle delay-9"></div>
+            <div class="particle delay-10"></div>
+
         </div>
 
         {{-- div 2 --}}
