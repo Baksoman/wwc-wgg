@@ -491,7 +491,7 @@
 
                         {{-- BG Preview --}}
                         <div id="cardPreview"
-                            class="max-w-sm rounded-2xl bg-white/100 overflow-hidden w-[20rem] h-[30rem] shadow-lg space-y-4 border border-white/18">
+                            class="max-w-sm rounded-2xl bg-white/100 overflow-hidden w-[18rem] h-[28rem] lg:w-[20rem] lg:h-[30rem] shadow-lg space-y-4 border border-white/18">
 
                             {{-- Image Preview --}}
                             <img id="imagePreview" class="w-auto h-[14rem] object-cover rounded-xl"
@@ -514,7 +514,7 @@
                     </div>
 
                     {{-- "Preview Card" Text --}}
-                    <p class="poppins text-3xl text-white font-bold text-center">
+                    <p class="poppins text-3xl text-white font-bold text-center ml-0 lg:ml-4">
                         <span class="block">P</span>
                         <span class="block">r</span>
                         <span class="block">e</span>
