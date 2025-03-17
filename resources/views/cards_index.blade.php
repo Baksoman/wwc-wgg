@@ -647,7 +647,6 @@
                                     </div>                                    
                                     @endif
 
-
                                     {{-- Title Section --}}
                                     <div class="relative">
                                         <h2 id="title-{{ $data->id }}"
@@ -705,12 +704,16 @@
         card.addEventListener("click", function () {
             let btnEditTitle = this.querySelector(".btn-edit-title");
             let btnEditDesc = this.querySelector(".btn-edit-desc");
-            let btnEditPict = this.querySelector(".btn-edit-picture");
             let btnDelete = this.querySelector(".btn-delete");
-
+            
             btnEditTitle.classList.toggle("hidden");
             btnEditDesc.classList.toggle("hidden");
-            btnEditPict.classList.toggle("hidden");
+            if (card.picture !== null) {
+                let btnEditPict = this.querySelector(".btn-edit-picture");
+                if (btnEditPict && btnEditPict.classList.contains("hidden")) {
+                    btnEditPict.classList.toggle("hidden");
+                }
+            }
             btnDelete.classList.toggle("hidden");
             });
         });
